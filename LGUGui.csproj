@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <AssemblyName>LGUGui</AssemblyName>
+        <Description>Example Dice Addon</Description>
+        <Version>1.0.0</Version>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\MysteryDice\Regular\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <RestoreAdditionalProjectSources>
+            https://api.nuget.org/v3/index.json;
+            https://nuget.bepinex.dev/v3/index.json
+        </RestoreAdditionalProjectSources>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+        <PackageReference Include="BepInEx.Core" Version="5.*" />
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+        <PackageReference Include="Rune580.Mods.LethalCompany.InputUtils" Version="0.7.4" />
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all" />
+        <PackageReference Include="LethalCompany.GameLibs.Steam" Version="70.0.0-ngd.0" PrivateAssets="all" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Reference Include="MoreShipUpgrades">
+        <HintPath>..\..\..\AppData\Roaming\com.kesomannen.gale\lethal-company\profiles\DiceSoftDependencies\BepInEx\plugins\malco-Lategame_Upgrades\MoreShipUpgrades\MoreShipUpgrades.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PostBuildEvent>
+            cd C:\Users\andre\Documents\NetcodePatcher
+            NetcodePatcher.dll "C:\Users\andre\source\repos\LGU Gui\bin\Debug\netstandard2.1" deps
+
+            copy "C:\Users\andre\source\repos\LGU Gui\bin\Debug\netstandard2.1\LGUGui.dll" "C:\Users\andre\Desktop\MysteryDice\LGUGui"
+            copy "C:\Users\andre\source\repos\LGU Gui\CHANGELOG.md" "C:\Users\andre\Desktop\MysteryDice\LGUGui"
+            copy "C:\Users\andre\source\repos\LGU Gui\README.md" "C:\Users\andre\Desktop\MysteryDice\LGUGui"
+            copy "C:\Users\andre\source\repos\LGU Gui\manifest.json" "C:\Users\andre\Desktop\MysteryDice\LGUGui"
+
+            cd "C:\Users\andre\Desktop\MysteryDice\"
+            call "C:\Users\andre\Desktop\MysteryDice\Make Zip10.bat"
+        </PostBuildEvent>
+    </PropertyGroup>
+
+</Project>
+
