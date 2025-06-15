@@ -15,7 +15,7 @@ namespace LGUGui
         
         private const string modGUID = "Slayer6409.LGU_GUI";
         private const string modName = "LGU_GUI";
-        private const string modVersion = "0.0.1";
+        private const string modVersion = "0.0.3";
 
         public static AssetBundle LoadedAssets;
         public static ManualLogSource CustomLogger;

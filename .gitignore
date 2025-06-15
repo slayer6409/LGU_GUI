@@ -33,3 +33,4 @@
 /obj/rider.project.model.nuget.info
 /obj/rider.project.restore.info
 /.idea/.idea.LGU Gui.dir/.idea/vcs.xml
+/obj/Debug/netstandard2.1/LGUGui.sourcelink.json

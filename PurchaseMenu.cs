@@ -21,6 +21,7 @@ public class PurchaseMenu
     public static Transform PurchaseUpgrade;
     public static Color NormalTextColor = new Color(0.02942256f, 0.8113208f, 0f, 1f); // 08CF00
     public static Color RedTextColor = new Color(0.7169812f, 0.03853131f, 0f, 1f); // B70A00
+    public static Color SaleColor = new Color(0.00f, 0.7f, 1f, 1f);
 
     public static CustomTerminalNode currentSelection;
     public static string location;
@@ -104,13 +105,28 @@ public class PurchaseMenu
             var buttonText = upgradeButton.transform.Find("Text (TMP)").GetComponent<TMP_Text>();
             buttonText.text = $"{upgrade.Name} : {currentLevel}/{maxLevel}";
             buttonText.color = hasEnough ? NormalTextColor : RedTextColor;
+            if(hasEnough && !maxed && upgrade.SalePercentage<1) buttonText.color = SaleColor;
 
             var displayText = upgradeThing.transform.Find("DisplayText").GetComponent<TMP_Text>();
             displayText.color = hasEnough ? NormalTextColor : RedTextColor;
+            if(hasEnough && !maxed && upgrade.SalePercentage<1) displayText.color = SaleColor;
 
             var pointsRequired = upgradeThing.transform.Find("DisplayText/PointsRequired").GetComponent<TMP_Text>();
-            pointsRequired.text = maxed ? "Maxed" : effectivePrice.ToString();
+            if (maxed)
+            {
+                pointsRequired.text = "Maxed";
+            }
+            else if (upgrade.SalePercentage < 1)
+            {
+                float salePercent = (1f - upgrade.SalePercentage) * 100f;
+                pointsRequired.text = $"{effectivePrice} ({Mathf.RoundToInt(salePercent)}% off)";
+            }
+            else
+            {
+                pointsRequired.text = effectivePrice.ToString();
+            }
             pointsRequired.color = hasEnough ? NormalTextColor : RedTextColor;
+            if(hasEnough && !maxed && upgrade.SalePercentage<1) pointsRequired.color = SaleColor;
 
             upgradeButton.onClick.AddListener(() =>
             {
@@ -188,6 +204,7 @@ public class PurchaseMenu
             var userNameText = TradePrefab.transform.Find("InputField (TMP)/DisplayText").GetComponent<TMP_Text>();
             userNameText.text = player.playerUsername;
             bool isUpdating = false;
+            tradeButton.interactable = false;
             var targetPlayerID = player.actualClientId;
             tradeInput.onValueChanged.AddListener((string text) =>
             {

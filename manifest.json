@@ -1,7 +1,7 @@
 {
   "name": "LateGameUpgrades_Gui",
-  "version_number": "0.0.1",
-  "website_url": "https://github.com/slayer6409/",
+  "version_number": "0.0.3",
+  "website_url": "https://github.com/slayer6409/LGU_GUI",
   "description": "This mod adds a gui for purchasing LateGame upgrades if per player upgrades are enabled",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2100",
